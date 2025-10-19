@@ -28,6 +28,8 @@ namespace PDFDownload
             //Try catch block to handle potential exceptions when reading the file
             try
             {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance); // added for testing ability
+                
                 //Reading the excel file using FileStream and ExcelDataReader
                 //The 'using' statement ensures that the FileStream is properly disposed of after use
                 //The dataTable is used to store the data read from the Excel file 

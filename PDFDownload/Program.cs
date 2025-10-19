@@ -19,36 +19,36 @@ namespace PDFDownloader
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-
-            //Creating instances of the Downloader and Reader classes
-            Downloader downloader = new Downloader();
-            Reader reader = new Reader();
-
             //Path for the list of URLs
             string listPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\List Folder\GRI_2017_2020 (1).xlsx";
             listPath = Directory.GetCurrentDirectory() + @"\List Folder\GRI_2017_2020 (1).xlsx"; // changed
-
 
             //Path for output folder
             string outputPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\";
 
             //Path for status rapport
             string statusPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\StatusRapport.txt";
-            statusPath = Directory.GetCurrentDirectory() + @"\Output\StatusRapport.txt"; // changed
+            statusPath = Directory.GetCurrentDirectory() + @"\Output\StatusRapport.txt"; // changed to this for testing purposes
 
             //Path for existing downloads
             string dwnPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\dwn\";
-            dwnPath = Directory.GetCurrentDirectory() + @"\Output\"; // changed
+            dwnPath = Directory.GetCurrentDirectory() + @"\Output\"; // changed to this for testing
 
-            //Getting a list of existing PDF files in the download directory
-            string[] existingFiles = Directory.GetFiles(dwnPath, "*.pdf");
+            //Creating instances of the Downloader and Reader classes 
+            Downloader downloader = new Downloader();
+            Reader reader = new Reader();
+            HttpClient client = new HttpClient();
 
             //Reading the Excel file using the Reader class
             DataTable dataTable = new DataTable();
             dataTable = reader.ReadFile(listPath);
+
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+            //Getting a list of existing PDF files in the download directory
+            string[] existingFiles = Directory.GetFiles(dwnPath, "*.pdf");
 
             //Iterating through each row in the DataTable
             foreach (DataRow row in dataTable.Rows)
@@ -64,8 +64,10 @@ namespace PDFDownloader
                     continue;
 
                 //Downloading the PDF file using the Downloader class if it isn't already downloaded
-                downloader.DownloadFile(url, dwnPath, statusPath, pdfName, secondaryUrl);
+                await downloader.DownloadFile(client, url, dwnPath, statusPath, pdfName, secondaryUrl);
             }
+
+            client.Dispose();
         }
     }
 }

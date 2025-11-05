@@ -96,7 +96,7 @@ public class DownloaderUnitTest
     }
 
     // Creates a temporary folder for downloaded files and calls cleanup method
-    // Returns: path to temp folder
+    // Returns: path to temporary folder
     private string MakeDownloadPath()
     {
         string downloadPath = Path.GetTempPath();

@@ -1,0 +1,12 @@
+
+version: '3.8'
+
+services:
+  pdfdownloader:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pdfdownloader
+    ports:
+      - 8080:8080
+

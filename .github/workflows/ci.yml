@@ -1,0 +1,30 @@
+
+name: Build and Test PDF Downloader
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'  
+
+    - name: Restore dependencies
+      run: dotnet restore PDFDownload/PDFDownload.csproj
+
+    - name: Build
+      run: dotnet build PDFDownload/PDFDownload.csproj --no-restore --configuration Release
+
+    - name: Run Tests
+      run: dotnet test Test/Test.csproj --no-build --verbosity normal

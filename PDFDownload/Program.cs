@@ -23,7 +23,7 @@ namespace PDFDownloader
         {
             //Path for the list of URLs
             string listPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\List Folder\GRI_2017_2020 (1).xlsx";
-            listPath = Directory.GetCurrentDirectory() + @"\List Folder\GRI_2017_2020 (1).xlsx"; // changed
+            listPath = Path.Combine(Directory.GetCurrentDirectory(), "ListFolder", "GRI_2017_2020.xlsx"); // changed
 
             //Path for output folder
             string outputPath = @"C:\Visual Studio Projecter\PDFDownload\PDFDownload\Output\";

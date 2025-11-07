@@ -4,6 +4,9 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
 COPY . .
+COPY PDFDownload/ListFolder/GRI_2017_2020.xlsx PDFDownload/ListFolder/
+COPY PDFDownload/Output/ PDFDownload/Output/
+
 
 RUN dotnet restore PDFDownload/PDFDownload.csproj
 RUN dotnet build PDFDownload/PDFDownload.csproj --configuration Release --no-restore
